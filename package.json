@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "deploy": "node deploy-commands.js"
+    "deploy": "node deploy-commands.js",
+    "render-start": "node index.js",
+    "render-build": "npm install"
   },
   "dependencies": {
     "discord.js": "14.13.0",
