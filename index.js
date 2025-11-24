@@ -2,6 +2,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
 import http from "http";
 
+// === DISCORD BOT ===
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -13,15 +14,13 @@ client.on("ready", () => {
   console.log(`🤖 Bot online als ${client.user.tag}`);
 });
 
-// Slash commands handler
 client.on("interactionCreate", async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
-  // --- /aha ---
+  // /aha
   if (interaction.commandName === "aha") {
     const bericht = interaction.options.getString("bericht");
 
-    // Privé reply → niemand ziet dat jij /aha deed
     await interaction.reply({
       content: "Ik stuur het 10 keer…",
       ephemeral: true
@@ -32,7 +31,7 @@ client.on("interactionCreate", async interaction => {
     }
   }
 
-  // --- /blame ---
+  // /blame
   if (interaction.commandName === "blame") {
     const user = interaction.options.getUser("persoon");
 
@@ -47,8 +46,9 @@ client.on("interactionCreate", async interaction => {
 
 client.login(process.env.TOKEN);
 
-// --- Render Alive Server (BELANGRIJK!) ---
+
+// === RENDER WEB-SERVICE KEEP-ALIVE SERVER ===
 http.createServer((req, res) => {
   res.writeHead(200);
-  res.end("Bot is running!");
+  res.end("Bot is running on Render!");
 }).listen(process.env.PORT || 3000);
