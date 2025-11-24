@@ -2,12 +2,8 @@ import { Client, GatewayIntentBits } from "discord.js";
 import "dotenv/config";
 import http from "http";
 
-// === DISCORD BOT ===
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages
-  ]
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
 
 client.on("ready", () => {
@@ -17,12 +13,13 @@ client.on("ready", () => {
 client.on("interactionCreate", async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
-  // /aha
-  if (interaction.commandName === "aha") {
+  // --- /raid ---
+  if (interaction.commandName === "raid") {
     const bericht = interaction.options.getString("bericht");
 
+    // PRIVÉ reply zodat niemand ziet dat jij /raid deed
     await interaction.reply({
-      content: "Ik stuur het 10 keer…",
+      content: "Bericht wordt verstuurd…",
       ephemeral: true
     });
 
@@ -31,24 +28,25 @@ client.on("interactionCreate", async interaction => {
     }
   }
 
-  // /blame
+  // --- /blame ---
   if (interaction.commandName === "blame") {
     const user = interaction.options.getUser("persoon");
 
+    // PRIVÉ reply zodat niemand ziet dat jij /blame deed
     await interaction.reply({
-      content: "Blame verstuurd!",
+      content: `Blame verstuurd naar ${user.username}`,
       ephemeral: true
     });
 
+    // Stuur het bericht publiek
     await interaction.channel.send(`${user} je raid is geslaagd.`);
   }
 });
 
 client.login(process.env.TOKEN);
 
-
-// === RENDER WEB-SERVICE KEEP-ALIVE SERVER ===
+// --- Render webservice keep-alive ---
 http.createServer((req, res) => {
   res.writeHead(200);
-  res.end("Bot is running on Render!");
+  res.end("Bot is running!");
 }).listen(process.env.PORT || 3000);
