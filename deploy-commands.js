@@ -8,26 +8,26 @@ const commands = [
     .addStringOption(option =>
       option
         .setName("bericht")
-        .setDescription("Wat moet ik sturen?")
+        .setDescription("Wat moet de bot sturen?")
         .setRequired(true)
     ),
 
   new SlashCommandBuilder()
     .setName("blame")
-    .setDescription("Geef iemand de schuld (lol)")
+    .setDescription("Geef iemand de schuld (grapje)")
     .addUserOption(option =>
       option
         .setName("persoon")
-        .setDescription("Welke user?")
+        .setDescription("Welke gebruiker?")
         .setRequired(true)
     )
-].map(c => c.toJSON());
+].map(cmd => cmd.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 (async () => {
   try {
-    console.log("🔧 Commands uploaden...");
+    console.log("📡 Commands registreren...");
     await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
@@ -35,8 +35,8 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
       ),
       { body: commands }
     );
-    console.log("✅ Commands succesvol geüpload!");
-  } catch (e) {
-    console.error(e);
+    console.log("✅ Commands geregistreerd!");
+  } catch (err) {
+    console.error(err);
   }
 })();
