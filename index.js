@@ -29,7 +29,7 @@ const commandsData = [
 
 // --- FUNCTION: REGISTREER COMMANDS BIJ START ---
 async function registerCommands() {
-  const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
+  const rest = new REST({ version: "100" }).setToken(process.env.TOKEN);
   try {
     console.log("📡 Uploading slash commands...");
     const data = await rest.put(
