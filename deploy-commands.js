@@ -8,17 +8,17 @@ const commands = [
     .addStringOption(option =>
       option
         .setName("bericht")
-        .setDescription("Wat moet de bot sturen?")
+        .setDescription("Het bericht dat 10x gestuurd wordt")
         .setRequired(true)
     ),
 
   new SlashCommandBuilder()
     .setName("blame")
-    .setDescription("Geef iemand de schuld (grapje)")
+    .setDescription("Geef iemand de schuld (lol)")
     .addUserOption(option =>
       option
         .setName("persoon")
-        .setDescription("Welke gebruiker?")
+        .setDescription("Welke user?")
         .setRequired(true)
     )
 ].map(cmd => cmd.toJSON());
@@ -27,7 +27,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 (async () => {
   try {
-    console.log("📡 Commands registreren...");
+    console.log("Uploading slash commands…");
     await rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
@@ -35,7 +35,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
       ),
       { body: commands }
     );
-    console.log("✅ Commands geregistreerd!");
+    console.log("Commands uploaded!");
   } catch (err) {
     console.error(err);
   }
